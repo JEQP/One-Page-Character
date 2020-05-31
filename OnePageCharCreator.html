@@ -6,53 +6,176 @@
     <title>Create a Character</title>
 
     <style>
+        /* This is a particular way to do a grid layout. It involves creating sections as classes
+        The sections contain the CSS for the class, including grid-area
+        grid-area defines the part of the page the grid will take up within the grid container */
+        .header {
+            grid-area: header;
+            background-color: aqua;
+            text-align: center;
+        }
 
+        .general {
+            grid-area: general;
+            background-color: aquamarine;
+        }
+
+        .skills-header {
+            grid-area: skills-header;
+            background-color: salmon;
+            text-align: center;
+        }
+
+        .first-skill-list {
+            grid-area: 1stSList;
+            background-color: chartreuse;
+        }
+
+        .second-skill-list {
+            grid-area: 2ndSList;
+            background-color: palevioletred;
+        }
+
+        .third-skill-list {
+            grid-area: 3rdSList;
+            background-color: peru;
+        }
+
+        .crush {
+            grid-area: crush;
+            background-color: rebeccapurple;
+        }
+
+        .display {
+            grid-area: display;
+            background-color: slategrey;
+        }
+/* This is the grid container. It lays out the page according to grid-template-areas
+Each line is a row, with the columns determined by the grid-area of the classes above 
+This is very fragile. A mistake in the grid-template area will destroy the layout: 
+The order of the divs in the html document is also important. 
+To Be honest, I can think of no valid reason to use this format */
+        .page-container {
+            display: grid;
+            grid-template-areas:
+                'header header header header header header'
+                'general general general display display display'
+                'skills-header skills-header skills-header display display display'
+                '1stSList 2ndSList 3rdSList display display display'
+                'crush crush crush display display display';
+            grid-gap: 2px;
+        }
     </style>
 </head>
 
 <body>
-    <form>
+    <div class="page-container">
+        <div class="header">
+            <h1>Create a Character</h1>
+        </div>
+        <div class="general">
+            <fieldset>
+                <form>
+                    <!-- input text is a single line text input field.  -->
+                    <label for="charname">Name of Character:</label><br>
+                    <input type="text" id="charname" name="charname"><br>
 
-        <label for="charname">Name of Character:</label><br>
-        <input type="text" id="charname" name="charname"><br>
+                    <!-- Radio input allows users to select only one of a list -->
+                    <!-- The radio buttons are associated by having the same name. 
+                        id is use to link the label to the button
+                        value is what is passed when the form is submitted
+                        checked will set that radio button as the default. 
+                        If no button is selected, no value is passed on submission 
+                    -->
 
-        <!-- Radio input allows users to select only one of a list -->
-        <!-- The radio buttons are associated by having the same name. 
-    id is use to link the label to the button
-    value is what is passed when the form is submitted
-    checked will set that radio button as the default. 
-    If no button is selected, no value is passed on submission 
--->
 
-        <fieldset>
-            <legend>Race of Character</legend>
-            <div>
-                <input type="radio" id="race1" name="charrace" value="Human" checked>
-                <label for="race1">Human</label><br>
-                <input type="radio" id="race2" name="charrace" value="Troll">
-                <label for="race2">Troll</label><br>
-                <input type="radio" id="race3" name="charrace" value="Centaur">
-                <label for="race3">Centaur</label><br>
-                <input type="radio" id="race4" name="charrace" value="Harpy">
-                <label for="race4">Harpy</label><br>
-                <input type="radio" id="race5" name="charrace" value="Naiad">
-                <label for="race5">Naiad</label>
-            </div>
+                    <legend>Race of Character</legend>
+                    <div>
+                        <input type="radio" id="race1" name="charrace" value="Human" checked>
+                        <label for="race1">Human</label><br>
+                        <input type="radio" id="race2" name="charrace" value="Troll">
+                        <label for="race2">Troll</label><br>
+                        <input type="radio" id="race3" name="charrace" value="Centaur">
+                        <label for="race3">Centaur</label><br>
+                        <input type="radio" id="race4" name="charrace" value="Harpy">
+                        <label for="race4">Harpy</label><br>
+                        <input type="radio" id="race5" name="charrace" value="Naiad">
+                        <label for="race5">Naiad</label>
+                    </div>
+
+
+
+                    <label for="age">Age (15-50):</label>
+                    <input type="number" id="age" name="age" min="15" max="50">
+                    <br>
+
+                    <label for="vol">Gender:</label>
+                    <input type="range" id="vol" name="vol" min="0" max="50">
+
+                    <br>
+                    <label for="favcolor">Select your favorite color:</label>
+                    <input type="color" id="favcolor" name="favcolor"><br>
+                    <label for="occupation">Occupation:</label><br>
+                    <input type="text" id="occupation" name="occupation"><br><br>
+
+                    <!-- textarea allows multiline text input. 
+                        cols is the width of the box in characters
+                        rows is the height of the box in rows
+                        maxlength is the maximum number of characters -->
+                    Description (250 chars)<br>
+                    <textarea id="description" name="description" cols="50" rows="5" maxlength="250"
+                        placeholder="Describe your ideal self"></textarea><br>
+
+        </div>
+        <div class="display"><p>HERE WILL GO ALL THE RESULTS ONCE THE JAVASCRIPT TO DEAL WITH THE FORM IS DONE</p></div>
+        <div class="skills-header">Skills</div>
+
+        <div class="first-skill-list">
+            <input type="checkbox" id="skill1" name="skill1" value="Swordplay">
+            <label for="skill1">Swordplay</label><br>
+            <input type="checkbox" id="skill2" name="skill2" value="Tumbling">
+            <label for="skill2">Tumbling</label><br>
+            <input type="checkbox" id="skill3" name="skill3" value="Oratory">
+            <label for="skill3">Oratory</label><br>
+            <input type="checkbox" id="skill4" name="skill4" value="Seduction">
+            <label for="skill4">Seduction</label><br>
+            <input type="checkbox" id="skill5" name="Skills" value="Cooking">
+            <label for="Skill5">Cooking</label><br>
+        </div>
+        <div class="second-skill-list">
+            <input type="checkbox" id="skill6" name="skill6" value="Algebra">
+            <label for="skill6">Algebra</label><br>
+            <input type="checkbox" id="skill7" name="Skill7" value="Set Trap">
+            <label for="skill7">Set Trap</label><br>
+            <input type="checkbox" id="skill8" name="Skill8" value="Detect Trap">
+            <label for="skill8">Detect Trap</label><br>
+            <input type="checkbox" id="skill9" name="Skill9" value="Jedi Mind Trick">
+            <label for="skill9">Jedi Mind Trick</label><br>
+            <input type="checkbox" id="skill10" name="Skill10" value="Doggeral">
+            <label for="skill10">Doggeral</label><br>
+        </div>
+        <div class="third-skill-list">
+            <input type="checkbox" id="skill11" name="Skill11" value="Moonwalking">
+            <label for="skill11">Moonwalking</label><br>
+            <input type="checkbox" id="skill12" name="Skill12" value="Cunning">
+            <label for="skill12">Cunning</label><br>
+            <input type="checkbox" id="skill13" name="Skill13" value="Linguistics">
+            <label for="skill13">Linguistics</label><br>
+            <input type="checkbox" id="skill14" name="Skill14" value="Axe Throwing">
+            <label for="skill14">Axe Throwing</label><br>
+            <input type="checkbox" id="skill15" name="Skill15" value="Caber Tossing">
+            <label for="skill15">Caber Tossing</label><br>
+        </div>
+        <div class="crush">
+            <label for="secret">Secret Crush:</label><br>
+            <input type="password" id="secret" name="secret">
+        </div>
+        <br>
+        <input type="submit" value="Submit">
+        </form>
         </fieldset>
-
-
-        Occupation
-
-        Description
-
-        Skills
-
-        <div>
-        <label for="secret">Secret Crush:</label><br>
-  <input type="password" id="secret" name="secret">
-</div>
-
-    </form>
+    </div>
+    
 </body>
 
 </html>
