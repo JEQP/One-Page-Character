@@ -50,11 +50,20 @@
             grid-area: display;
             background-color: slategrey;
         }
-/* This is the grid container. It lays out the page according to grid-template-areas
+
+        /* This is the CSS for the display panel on the right */
+        .h1 {
+            text-align: center;
+        }
+
+        /* This is the grid container. It is an implicit grid, meaning that the grid is not defined. 
+It lays out the page according to grid-template-areas
 Each line is a row, with the columns determined by the grid-area of the classes above 
 This is very fragile. A mistake in the grid-template area will destroy the layout: 
 The order of the divs in the html document is also important. 
-To Be honest, I can think of no valid reason to use this format */
+To Be honest, I can think of no valid reason to use this format 
+The columns are flexible in width, HOWEVER the textarea has been set at 250px of width, 
+which creates a minimum size for the first three columns. */
         .page-container {
             display: grid;
             grid-template-areas:
@@ -75,7 +84,7 @@ To Be honest, I can think of no valid reason to use this format */
         </div>
         <div class="general">
             <fieldset>
-                <form>
+                <form id="charData">
                     <!-- input text is a single line text input field.  -->
                     <label for="charname">Name of Character:</label><br>
                     <input type="text" id="charname" name="charname"><br>
@@ -105,12 +114,12 @@ To Be honest, I can think of no valid reason to use this format */
 
 
 
-                    <label for="age">Age (15-50):</label>
-                    <input type="number" id="age" name="age" min="15" max="50">
+                    <label for="age">Age (15-99):</label>
+                    <input type="number" id="age" name="age" min="15" max="99">
                     <br>
 
-                    <label for="vol">Gender:</label>
-                    <input type="range" id="vol" name="vol" min="0" max="50">
+                    <label for="gender">Gender:</label>
+                    <input type="range" id="gender" name="gender" min="0" max="50">
 
                     <br>
                     <label for="favcolor">Select your favorite color:</label>
@@ -127,7 +136,10 @@ To Be honest, I can think of no valid reason to use this format */
                         placeholder="Describe your ideal self"></textarea><br>
 
         </div>
-        <div class="display"><p>HERE WILL GO ALL THE RESULTS ONCE THE JAVASCRIPT TO DEAL WITH THE FORM IS DONE</p></div>
+        <!-- HERE WILL GO ALL THE RESULTS ONCE THE JAVASCRIPT TO DEAL WITH THE FORM IS DONE -->
+        <div class="display" id="displayPanel">
+
+        </div>
         <div class="skills-header">Skills</div>
 
         <div class="first-skill-list">
@@ -171,11 +183,83 @@ To Be honest, I can think of no valid reason to use this format */
             <input type="password" id="secret" name="secret">
         </div>
         <br>
+        <!-- This button will run the function getFormData when clicked -->
+        <button id="createchar" onclick="getFormData(event)">Create Character</button>
+        <!-- The submit button sends the form data to a page via the URL, which it can be interpreted by a server.
+        In the form element, action="/action_page.php" will direct the form data to the URL /action_page.php, as a query string -->
         <input type="submit" value="Submit">
         </form>
         </fieldset>
     </div>
-    
+    <script>
+        function getFormData(event) {
+            console.log("event: ", event);
+            event.preventDefault();
+            event.stopPropagation();
+            let formData = document.querySelector("form");
+            let formValue = new FormData(formData);
+            console.log("formValue: ", formValue);
+            // Here we will get the data entered by the user and associate it with variables. 
+            
+            let name = document.getElementById("charname").value;
+            console.log("name: ", name);
+            var race = "";
+            // Radio values are individual, with the selected value being checked.
+            // Collect them into an array using document.getElementsByName("NAME VALUE")
+            // Iterate through the list, one will have the checked value set to "true"
+            // Get the value from this index, and that is the value of the checked box.
+            let chosenRace = document.getElementsByName("charrace");
+            for (let i = 0; i < chosenRace.length; i++) {
+                if (chosenRace[i].checked) {
+                    race = chosenRace[i].value;
+                    break;
+                }
+            }
+            console.log("race: ", race);
+            let age = document.getElementById("age").value;
+            console.log("age: ", age);
+            // This will return a numerical figure based on the slider. 
+            let gender = document.getElementById("gender").value;
+            console.log("gender: ", gender);
+
+            // This returns the hexadecimal code of the color chosen.
+            let favcolor = document.getElementById("favcolor").value;
+            console.log("favcolor: ", favcolor);
+            let occupation = document.getElementById("occupation").value;
+            console.log("occupation: ", occupation);
+            let description = document.getElementById("description").value;
+            console.log("description: ", description);
+
+            let skills = document.forms[0];
+            console.log("skills: ", skills);
+            let txt = "";
+            for (let i = 0; i < skills.length; i++) {
+                if (skills[i].checked) {
+                    txt = txt + skills[i].value + " ";
+                }
+            }
+            console.log("skills txt: ", txt);
+
+            let crush = document.getElementById("secret").value;
+            console.log("crush: ", crush);
+
+// Here we will dynamically display the information entered by the user. 
+
+            let displayChar = document.getElementById("displayPanel");
+            let titleDiv = document.createElement("div");
+            titleDiv.style.textAlign = "center";
+
+            let title = document.createElement("h1");
+            title.style.color=favcolor;
+            title.style.fontFamily="fantasy";
+            let nameText = document.createTextNode(name);
+            title.appendChild(nameText);
+            titleDiv.appendChild(title);
+            displayChar.appendChild(titleDiv);
+
+
+        }
+    </script>
 </body>
 
 </html>
