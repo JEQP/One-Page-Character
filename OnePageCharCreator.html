@@ -200,7 +200,7 @@ which creates a minimum size for the first three columns. */
             let formValue = new FormData(formData);
             console.log("formValue: ", formValue);
             // Here we will get the data entered by the user and associate it with variables. 
-            
+
             let name = document.getElementById("charname").value;
             console.log("name: ", name);
             var race = "";
@@ -243,20 +243,123 @@ which creates a minimum size for the first three columns. */
             let crush = document.getElementById("secret").value;
             console.log("crush: ", crush);
 
-// Here we will dynamically display the information entered by the user. 
+            // Here we will dynamically display the information entered by the user. 
 
             let displayChar = document.getElementById("displayPanel");
+
+            // This will display the characters name as a title, centered, and coloured with their chosen color.
             let titleDiv = document.createElement("div");
             titleDiv.style.textAlign = "center";
-
             let title = document.createElement("h1");
-            title.style.color=favcolor;
-            title.style.fontFamily="fantasy";
-            let nameText = document.createTextNode(name);
+            title.style.color = favcolor;
+            title.style.fontFamily = "fantasy";
+            let nameText = document.createTextNode(name + " the " + occupation);
             title.appendChild(nameText);
             titleDiv.appendChild(title);
             displayChar.appendChild(titleDiv);
 
+            // This will display race, age and gender. 
+
+            // First, we convert gender from a number to a word
+            // We're evaluating the condition "true". The first condition that matches will trigger the break condition.
+            let genderPublish = "";
+            console.log("gender: ", gender);
+            switch (true) {
+                case gender === 1:
+                    genderPublish = "FemeNazi";
+                    break;
+                case gender < 5:
+                    genderPublish = "Wonder Woman";
+                    break;
+                case gender < 10:
+                    genderPublish = "Woman";
+                    break;
+                case gender < 15:
+                    genderPublish = "Feminine";
+                    break;
+                case gender < 20:
+                    genderPublish = "Xena";
+                    break;
+                case gender < 25:
+                    genderPublish = "Non-binary";
+                    break;
+                case gender = 25:
+                    genderPublish = "Intersex";
+                    break;
+                case gender < 29:
+                    genderPublish = "Non-binary";
+                    break;
+                case gender = 30:
+                    genderPublish = "Futanari";
+                    break;
+                case gender < 35:
+                    genderPublish = "K-pop Boy Band";
+                    break;
+                case gender < 40:
+                    genderPublish = "Macho";
+                    break;
+                case gender < 45:
+                    genderPublish = "Man";
+                    break;
+                case gender < 50:
+                    genderPublish = "Star Lord";
+                    break;
+                case gender === 50:
+                    genderPublish = "Men's Rights Activist";
+                    break;
+            }
+            console.log("genderPublish: ", genderPublish);
+
+            // Create a grid to evenly space the data.
+            // To centre things within each cell of the grid, use justifyItems
+            // NOT justifyContent or textJustify.
+            let featuresDiv = document.createElement("div");
+            featuresDiv.style.display = "grid";
+            featuresDiv.style.gridTemplateColumns = "1fr 1fr 1fr";
+            featuresDiv.style.justifyItems = "center";
+
+            // create divs for race, age, gender
+            let raceDiv = document.createElement("div");;
+            let raceText = document.createTextNode(race);
+            raceDiv.appendChild(raceText);
+
+            let ageDiv = document.createElement("div");
+            let ageText = document.createTextNode(age + " years old");
+            ageDiv.appendChild(ageText);
+
+            let genderDiv = document.createElement("div");
+            let genderText = document.createTextNode(genderPublish);
+            genderDiv.appendChild(genderText);
+
+            // Append these to the grid div
+            featuresDiv.appendChild(raceDiv);
+            featuresDiv.appendChild(ageDiv);
+            featuresDiv.appendChild(genderDiv);
+
+            // Append this to the main display div
+            displayChar.appendChild(featuresDiv);
+
+            // Create description display
+            // In order to center the div, it has to be inside a div with display "flex"
+            // Then justifyContent will work.
+            // We would set displayChar to have display "flex", but this is precise. 
+            let descriptionContainer = document.createElement("div");
+            descriptionContainer.style.width = "100%";
+            descriptionContainer.style.display = "flex";
+            descriptionContainer.style.justifyContent = "center";
+            // This will create the div that contains the text, with a border. 
+            let descriptionDiv = document.createElement("div");
+            descriptionDiv.style.borderStyle = "ridge";
+            descriptionDiv.style.borderColor = favcolor;
+            descriptionDiv.style.borderWidth = "thick";
+            descriptionDiv.style.margin = "20px";
+            descriptionDiv.style.width = "300px";
+            // Adds the text from user input
+            let descriptionText = document.createTextNode(description);
+            // Append description display to character display, and other appends
+            descriptionDiv.appendChild(descriptionText);
+            descriptionContainer.appendChild(descriptionDiv);
+            displayChar.appendChild(descriptionContainer);
 
         }
     </script>
