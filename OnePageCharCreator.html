@@ -230,20 +230,29 @@ which creates a minimum size for the first three columns. */
             let description = document.getElementById("description").value;
             console.log("description: ", description);
 
+            // Like radio input, checkbox input creates different values for each box.
+            // For the radio we collected all the inputs by name, here we'll use the whole form.
+            // The form includes ALL of the form data, not just keys and values (they are in 0 index)
+            // We collect the skills by looking for keys that have "checked" as true
+            // This will also incude radio inputs, so we have to eliminate those.
+
+            console.log("forms: ", document.forms);
             let skills = document.forms[0];
             console.log("skills: ", skills);
-            let txt = "";
+            let skillsArray = [];
             for (let i = 0; i < skills.length; i++) {
-                if (skills[i].checked) {
-                    txt = txt + skills[i].value + " ";
+                if (skills[i].checked && skills[i].name !== "charrace") {
+                    skillsArray.push(skills[i].value);
                 }
             }
-            console.log("skills txt: ", txt);
+            console.log("skillsArray: ", skillsArray);
 
             let crush = document.getElementById("secret").value;
             console.log("crush: ", crush);
 
+            // **********************
             // Here we will dynamically display the information entered by the user. 
+            // **********************
 
             let displayChar = document.getElementById("displayPanel");
 
@@ -360,6 +369,36 @@ which creates a minimum size for the first three columns. */
             descriptionDiv.appendChild(descriptionText);
             descriptionContainer.appendChild(descriptionDiv);
             displayChar.appendChild(descriptionContainer);
+
+            // Create Skills display
+            // We'll create a list for the skillsArray created earlier. 
+            // In order to justify the skills list so it is not completely left
+            // it needs to be in a container which has display flex
+            // We center the skills div in the container, and adjust its location 
+            // in the panel using "width". 
+            // don't forget to append everything appropriately....
+
+            let skillsDivContainer = document.createElement("div");
+            skillsDivContainer.style.display = "flex";
+            skillsDivContainer.style.justifyContent = "center";
+            let skillsDiv = document.createElement("div");
+            skillsDiv.style.width = "60%";
+            let skillsTitle = document.createElement("h3");
+            let skillsTitleText = document.createTextNode("Skills");
+            skillsTitle.appendChild(skillsTitleText);
+            skillsDiv.appendChild(skillsTitle);
+
+            let skillsList = document.createElement("ul");
+
+            for (let i = 0; i < skillsArray.length; i++) {
+                let skillShown = document.createElement("li");
+                let skillShownText = document.createTextNode(skillsArray[i]);
+                skillShown.appendChild(skillShownText);
+                skillsList.appendChild(skillShown);
+            }
+            skillsDivContainer.appendChild(skillsDiv);
+            skillsDiv.appendChild(skillsList);
+            displayChar.appendChild(skillsDivContainer);
 
         }
     </script>
