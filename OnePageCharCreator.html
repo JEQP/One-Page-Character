@@ -186,8 +186,9 @@ which creates a minimum size for the first three columns. */
         <!-- This button will run the function getFormData when clicked -->
         <button id="createchar" onclick="getFormData(event)">Create Character</button>
         <!-- The submit button sends the form data to a page via the URL, which it can be interpreted by a server.
-        In the form element, action="/action_page.php" will direct the form data to the URL /action_page.php, as a query string -->
-        <input type="submit" value="Submit">
+        In the form element, action="/action_page.php" will direct the form data to the URL /action_page.php, as a query string 
+        We're using a different button because we're not sending information to a server. -->
+        <!-- <input type="submit" value="Submit"> -->
         </form>
         </fieldset>
     </div>
@@ -399,6 +400,100 @@ which creates a minimum size for the first three columns. */
             skillsDivContainer.appendChild(skillsDiv);
             skillsDiv.appendChild(skillsList);
             displayChar.appendChild(skillsDivContainer);
+
+            // Add mail message from secret crush.
+            // Change the attribute of the element
+
+            // mailDivContainer will contain two subdivs, the mailHeader and mailBody
+            let mailDivContainer = document.createElement("div");
+            mailDivContainer.style.display = "flex";
+            mailDivContainer.style.justifyContent = "center";
+            mailDivContainer.style.width = "100%";
+            mailDivContainer.style.padding = "10px";
+
+            // mailHeader will contain subdivs mailImg1, mailTitle, mailImg2 
+            // justifyContent positions content on the horizontal axis
+            // alignContent positions content on the vertical axis
+            // They both need display to be set to flex, or a variant. 
+            // setting width may not do anything because the parent div has no width set.
+            let mailHeader = document.createElement("div");
+            mailHeader.style.display = "flex";
+            mailHeader.style.justifyContent = "center";
+            mailHeader.style.alignContent = "center";
+            mailHeader.style.width = "100%";
+
+            let mailTitle = document.createElement("h3");
+
+            // Note: In an application you would do switch cases for the all the possessive endings. 
+            let mailTitleText = document.createTextNode("  " + name + "'s Mail Box  ");
+            mailTitle.appendChild(mailTitleText);
+
+            let mailImg1 = document.createElement("img");
+            mailImg1.setAttribute("src", "http://clipart-library.com/images_k/email-transparent-icon/email-transparent-icon-25.png");
+            mailImg1.setAttribute("alt", "Mail Icon");
+            mailImg1.setAttribute("width", "50px");
+
+            let mailImg2 = document.createElement("img");
+            mailImg2.setAttribute("src", "http://clipart-library.com/images_k/email-transparent-icon/email-transparent-icon-25.png");
+            mailImg2.setAttribute("alt", "Mail Icon");
+            mailImg2.setAttribute("width", "50px");
+
+            mailHeader.appendChild(mailImg1);
+            mailHeader.appendChild(mailTitle);
+            mailHeader.appendChild(mailImg2);
+            mailDivContainer.appendChild(mailHeader);
+
+            let lineBreak = document.createElement("br");
+            mailDivContainer.appendChild(lineBreak);
+
+            mailBody = document.createElement("div");
+            mailBody.style.width = "60%";
+
+            let mailIcon = document.createElement("span");
+            mailIcon.innerHTML = "&#9993;";
+            let mailNotice = document.createElement("p");
+            let mailNoticeText = document.createTextNode(" You have mail from " + crush);
+            mailNotice.appendChild(mailIcon);
+            mailNotice.appendChild(mailNoticeText);
+            mailBody.appendChild(mailNotice);
+            mailDivContainer.appendChild(mailBody);
+
+            displayChar.appendChild(mailDivContainer);
+
+            let request = new XMLHttpRequest();
+            request.open("GET", "https://serpapi.com/playground?q=Apple&tbm=isch&ijn=0");
+            request.send();
+            request.onload = () => {
+                console.log("request: ", request);
+                if (request.status === 200) {
+                    console.log(JSON.parse(request.response));
+                } else {
+                    console.log(`error ${request.status} ${request.statusText}`)
+                }
+            }
+
+            var imgUrl = "";
+            if (gender < 25 && race === "Human") {
+                imgUrl = "/woman.jpg";
+            } else if (gender >= 25 && race === "Human") {
+                imgUrl = "/man.jpg"
+            } else if (gender < 25 && race === "Centaur") {
+                imgUrl = "/centaurWoman.jpg";
+            } else if (gender >= 25 && race === "Centaur") {
+                imgUrl = "/centaurMan.jpg";
+            } else if (gender <= 25 && race === "Harpy") {
+                imgUrl = "/harpywoman.jpg";
+            } else if (gender > 25 && race === "Harpy") {
+                imgUrl = "/harpyman.jpg";
+            } else if (race === "Troll") {
+                imgUrl = "/troll.jpg";
+            } else if (race === "Naiad") {
+                imgUrl = "/naiad.jpg";
+            }
+
+
+
+
 
         }
     </script>
