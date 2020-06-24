@@ -460,40 +460,73 @@ which creates a minimum size for the first three columns. */
 
             displayChar.appendChild(mailDivContainer);
 
-            let request = new XMLHttpRequest();
-            request.open("GET", "https://serpapi.com/playground?q=Apple&tbm=isch&ijn=0");
-            request.send();
-            request.onload = () => {
-                console.log("request: ", request);
-                if (request.status === 200) {
-                    console.log(JSON.parse(request.response));
-                } else {
-                    console.log(`error ${request.status} ${request.statusText}`)
-                }
-            }
+            // The request below fails because of CORS error
+            // let request = new XMLHttpRequest();
+            // request.open("GET", "https://serpapi.com/playground?q=Apple&tbm=isch&ijn=0");
+            // request.send();
+            // request.onload = () => {
+            //     console.log("request: ", request);
+            //     if (request.status === 200) {
+            //         console.log(JSON.parse(request.response));
+            //     } else {
+            //         console.log(`error ${request.status} ${request.statusText}`)
+            //     }
+            // }
+
+            // images are 333 by 500
+            // since images are in the same folder the url has no /
 
             var imgUrl = "";
             if (gender < 25 && race === "Human") {
-                imgUrl = "/woman.jpg";
+                imgUrl = "woman.jpg";
             } else if (gender >= 25 && race === "Human") {
-                imgUrl = "/man.jpg"
+                imgUrl = "man.jpg"
             } else if (gender < 25 && race === "Centaur") {
-                imgUrl = "/centaurWoman.jpg";
+                imgUrl = "centaurWoman.jpg";
             } else if (gender >= 25 && race === "Centaur") {
-                imgUrl = "/centaurMan.jpg";
+                imgUrl = "centaurMan.jpg";
             } else if (gender <= 25 && race === "Harpy") {
-                imgUrl = "/harpywoman.jpg";
+                imgUrl = "harpywoman.jpg";
             } else if (gender > 25 && race === "Harpy") {
-                imgUrl = "/harpyman.jpg";
+                imgUrl = "harpyman.jpg";
             } else if (race === "Troll") {
-                imgUrl = "/troll.jpg";
+                imgUrl = "troll.jpg";
             } else if (race === "Naiad") {
-                imgUrl = "/naiad.jpg";
+                imgUrl = "naiad.jpg";
+            }
+            
+            // Create the div to hole the image
+            let imgContainer = document.createElement("div");
+            imgContainer.style.width = "100%";
+            imgContainer.style.display = "flex";
+            imgContainer.style.justifyContent = "center";
+            let imgDiv = document.createElement("div");
+
+            let imgEle = document.createElement("img");
+            imgEle.setAttribute("src", `${imgUrl}`);
+            imgEle.setAttribute("alt", "Character Portrait");
+            imgEle.setAttribute("height", "0");
+            imgEle.setAttribute("width", "0");
+
+            // This will cause the image to grow. Height has to start with extra because the image is not square.
+            // setInterval will run frame every 5 milliseconds.
+            // clearInterval will clear the interval called id, which will stop frame from running. 
+
+            var id = setInterval(frame, 5);
+            var grow = 0;
+            function frame() {
+                if (grow === 333) {
+                    clearInterval(id);
+                } else {
+                    grow++;
+                    imgEle.style.height = grow + 167 + "px";
+                    imgEle.style.width = grow + "px";
+                }
             }
 
-
-
-
+            imgDiv.appendChild(imgEle);
+            imgContainer.appendChild(imgDiv);
+            displayChar.appendChild(imgContainer);
 
         }
     </script>
