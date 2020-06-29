@@ -11,44 +11,47 @@
         grid-area defines the part of the page the grid will take up within the grid container */
         .header {
             grid-area: header;
-            background-color: aqua;
+            background-color: rebeccapurple;
             text-align: center;
+            margin-bottom: 1px;
         }
 
         .general {
             grid-area: general;
-            background-color: aquamarine;
+            background-color: whitesmoke;
         }
 
         .skills-header {
             grid-area: skills-header;
-            background-color: salmon;
+            background-color: whitesmoke;
             text-align: center;
+            align-content: center;
+            text-justify: auto;
         }
 
         .first-skill-list {
             grid-area: 1stSList;
-            background-color: chartreuse;
+            background-color: whitesmoke;
         }
 
         .second-skill-list {
             grid-area: 2ndSList;
-            background-color: palevioletred;
+            background-color: whitesmoke;
         }
 
         .third-skill-list {
             grid-area: 3rdSList;
-            background-color: peru;
+            background-color: whitesmoke;
         }
 
         .crush {
             grid-area: crush;
-            background-color: rebeccapurple;
+            background-color: whitesmoke;
         }
 
         .display {
             grid-area: display;
-            background-color: slategrey;
+            background-color: whitesmoke;
         }
 
         /* This is the CSS for the display panel on the right */
@@ -72,7 +75,7 @@ which creates a minimum size for the first three columns. */
                 'skills-header skills-header skills-header display display display'
                 '1stSList 2ndSList 3rdSList display display display'
                 'crush crush crush display display display';
-            grid-gap: 2px;
+            /* grid-gap: 2px; */
         }
     </style>
 </head>
@@ -83,7 +86,7 @@ which creates a minimum size for the first three columns. */
             <h1>Create a Character</h1>
         </div>
         <div class="general">
-            <fieldset>
+            <!-- <fieldset> -->
                 <form id="charData">
                     <!-- input text is a single line text input field.  -->
                     <label for="charname">Name of Character:</label><br>
@@ -134,13 +137,14 @@ which creates a minimum size for the first three columns. */
                     Description (250 chars)<br>
                     <textarea id="description" name="description" cols="50" rows="5" maxlength="250"
                         placeholder="Describe your ideal self"></textarea><br>
-
+                    </form>
+                <!-- </fieldset> -->
         </div>
         <!-- HERE WILL GO ALL THE RESULTS ONCE THE JAVASCRIPT TO DEAL WITH THE FORM IS DONE -->
         <div class="display" id="displayPanel">
 
         </div>
-        <div class="skills-header">Skills</div>
+        <div class="skills-header"><h2>Skills</h2></div>
 
         <div class="first-skill-list">
             <input type="checkbox" id="skill1" name="skill1" value="Swordplay">
@@ -189,8 +193,7 @@ which creates a minimum size for the first three columns. */
         In the form element, action="/action_page.php" will direct the form data to the URL /action_page.php, as a query string 
         We're using a different button because we're not sending information to a server. -->
         <!-- <input type="submit" value="Submit"> -->
-        </form>
-        </fieldset>
+
     </div>
     <script>
         function getFormData(event) {
@@ -507,6 +510,10 @@ which creates a minimum size for the first three columns. */
             imgEle.setAttribute("alt", "Character Portrait");
             imgEle.setAttribute("height", "0");
             imgEle.setAttribute("width", "0");
+            
+            imgEle.style.borderStyle = "groove";
+            imgEle.style.borderColor = favcolor;
+            imgEle.style.borderWidth = "thick";
 
             // This will cause the image to grow. Height has to start with extra because the image is not square.
             // setInterval will run frame every 5 milliseconds.
