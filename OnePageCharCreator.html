@@ -259,6 +259,11 @@ which creates a minimum size for the first three columns. */
             // **********************
 
             let displayChar = document.getElementById("displayPanel");
+            displayChar.style.borderStyle = "inset";
+            displayChar.style.borderColor = favcolor;
+            displayChar.style.borderWidth = "thick";
+            displayChar.style.backgroundColor = "white";
+            displayChar.style.padding = "2px";
 
             // This will display the characters name as a title, centered, and coloured with their chosen color.
             let titleDiv = document.createElement("div");
